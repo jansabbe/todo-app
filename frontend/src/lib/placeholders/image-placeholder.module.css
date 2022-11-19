@@ -1,0 +1,28 @@
+.wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.image {
+    flex: 1 0;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: contain;
+    margin: 20px;
+    min-height: 200px;
+}
+
+.errorImage {
+    background-image: url("./broken.svg");
+}
+.emptyImage {
+    background-image: url("./empty-state.svg");
+}
+
+.message {
+    font-size: var(--large-font-size);
+    font-weight: 150;
+    text-align: center;
+    margin: 20px;
+}

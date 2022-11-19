@@ -1,0 +1,43 @@
+.appHeader {
+    background: linear-gradient(90deg, rgba(222, 57, 234, 0.3) 2%, rgba(36, 16, 125, 0.3) 94%),
+        bottom/cover url(./assets/background.jpg);
+    height: 360px;
+    width: 100%;
+    position: fixed;
+}
+
+.app {
+    position: relative;
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    height: 100%;
+}
+
+.appContent {
+    margin: 60px 15px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 450px;
+}
+
+@media (max-height: 500px) {
+    .appContent {
+        margin: 15px;
+    }
+}
+
+@media (max-width: 480px) {
+    .appContent {
+        width: auto;
+        min-width: 300px;
+    }
+}
+
+.title {
+    font-weight: 900;
+    font-size: var(--title-font-size);
+    letter-spacing: -0.07rem;
+    color: var(--offwhite);
+}

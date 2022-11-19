@@ -1,0 +1,16 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Test",
+            "type": "node",
+            "request": "launch",
+            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-scripts",
+            "args": ["test", "--runInBand", "--no-cache", "--watchAll=false", "${relativeFile}"],
+            "cwd": "${workspaceFolder}/frontend",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "env": { "CI": "true" }
+        }
+    ]
+}

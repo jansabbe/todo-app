@@ -1,0 +1,19 @@
+{
+    "name": "todo-app",
+    "workspaces": [
+        "frontend",
+        "backend"
+    ],
+    "scripts": {
+        "start:frontend": "npm run start -w frontend",
+        "start:backend": "npm run start -w backend",
+        "start": "conc \"npm:start:*\"",
+        "test:once": "npm run test -w frontend -- --watchAll=false",
+        "test": "npm run test -w frontend -- --watchAll",
+        "test:ci": "CI=true npm run test --workspaces",
+        "check": "npm run check --workspaces"
+    },
+    "devDependencies": {
+        "concurrently": "^7.6.0"
+    }
+}

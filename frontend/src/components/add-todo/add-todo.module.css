@@ -1,0 +1,96 @@
+.wrapper {
+    background-color: var(--snowwhite);
+    box-shadow: 0 0 10px 0 var(--darkgray);
+    border-radius: 5px 5px 0 0;
+    padding: 15px;
+    color: var(--darkgray);
+}
+
+.label {
+    font-size: var(--small-font-size);
+    font-weight: 450;
+    display: block;
+    color: var(--gray);
+}
+
+.inputText {
+    margin: 5px 0;
+    display: block;
+    background-color: transparent;
+    width: 100%;
+    font-size: var(--large-font-size);
+    border: none;
+    color: var(--gray);
+    border-bottom: 1px solid var(--gray);
+    font-weight: 225;
+}
+
+.inputText::placeholder {
+    color: var(--lightgray);
+    font-weight: 150;
+}
+
+.inputText:focus-visible {
+    outline: none;
+    color: var(--darkgray);
+    margin-bottom: 4px;
+    border-bottom: 2px solid var(--darkbrown);
+    font-weight: 225;
+}
+
+.inputWrapper:focus-within .label {
+    color: var(--darkgray);
+}
+
+.submitButton {
+    background: none;
+    border-radius: 5px;
+    margin-top: 15px;
+    border: 1px solid var(--gray);
+    color: var(--gray);
+    font-weight: 300;
+    font-size: var(--medium-font-size);
+    padding: 5px 15px;
+    cursor: pointer;
+}
+
+.submitButton:hover {
+    background-color: var(--lightbrown);
+    border: 1px solid var(--darkgray);
+    color: var(--darkgray);
+}
+
+.submitButton:active {
+    background-color: var(--darkbrown);
+    border: 1px solid var(--darkgray);
+    color: var(--snowwhite);
+}
+
+.submitButton:focus-visible {
+    color: var(--darkgray);
+    outline: 2px solid var(--darkbrown);
+}
+
+.submitButton[disabled] {
+    pointer-events: none;
+    border: 1px solid var(--lightgray);
+    color: var(--lightgray);
+    outline: none;
+}
+
+.errorMessage {
+    font-size: var(--small-font-size);
+    font-weight: 300;
+    color: var(--darkbrown);
+}
+
+.errorMessage::before {
+    content: "";
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='20' height='20' viewBox='0 0 24 24' fill='none' stroke='%23b1783f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round' class='feather feather-alert-circle'%3E%3Ccircle cx='12' cy='12' r='10'%3E%3C/circle%3E%3Cline x1='12' y1='8' x2='12' y2='12'%3E%3C/line%3E%3Cline x1='12' y1='16' x2='12.01' y2='16'%3E%3C/line%3E%3C/svg%3E");
+    background-size: contain;
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-bottom: -4px;
+    margin-right: 5px;
+}

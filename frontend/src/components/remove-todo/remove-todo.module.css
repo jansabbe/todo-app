@@ -1,0 +1,22 @@
+.iconButton {
+    border: none;
+    background: none;
+    border-radius: 5px;
+    color: var(--gray);
+    padding: 5px;
+    cursor: pointer;
+}
+
+.iconButton:hover {
+    background-color: var(--lightbrown);
+    color: var(--darkgray);
+}
+
+.iconButton:active {
+    background-color: var(--darkbrown);
+    color: var(--snowwhite);
+}
+
+.iconButton:focus-visible {
+    outline: 2px solid var(--darkbrown);
+}

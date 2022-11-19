@@ -1,0 +1,33 @@
+.wrapper {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    font-size: var(--large-font-size);
+}
+
+.description {
+    flex: 1;
+    font-weight: 225;
+    cursor: pointer;
+}
+
+.checked {
+    color: var(--lightgray);
+    text-decoration: line-through;
+}
+
+.inputCheckbox {
+    accent-color: var(--darkbrown);
+    height: var(--large-font-size);
+    width: var(--large-font-size);
+    cursor: pointer;
+}
+
+.deleteButton {
+    display: none;
+}
+
+.wrapper:hover .deleteButton,
+.wrapper:focus-within .deleteButton {
+    display: initial;
+}
