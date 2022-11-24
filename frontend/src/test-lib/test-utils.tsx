@@ -8,7 +8,15 @@ type CustomRenderResult = RenderResult & { user: ReturnType<typeof userEvent.set
 
 function customRender(element: ReactElement, options?: RenderOptions): CustomRenderResult {
     const queryClient = new QueryClient({
-        defaultOptions: { queries: { refetchOnWindowFocus: false, retry: false } },
+        defaultOptions: {
+            queries: { refetchOnWindowFocus: false, retry: false },
+        },
+        logger: {
+            log: console.log,
+            warn: console.warn,
+            // Do not log errors that we are stubbing as errors
+            error: () => {},
+        },
     });
 
     const user = userEvent.setup();

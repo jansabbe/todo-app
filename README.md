@@ -259,3 +259,12 @@ expect(postCall).toHaveBeenCalledWith({ description: expectedDescription })
 -   when toggling a todo item, a `checked` css class should be applied to the todo item.
 -   when toggling a todo item, the checkbox is checked optimistically. However if the `PUT` call fails, the todo item should be unchecked
 -   while adding a todo, the 'Add' button should be disabled and show 'Adding...'. You might need to [delay](https://mswjs.io/docs/api/context/delay) the server to verify this.
+-   create a helper method `mockHandler` that takes a `jest.Mock<any, any>` and returns a `ResponseResolver<RestRequest, RestContext>` to easily mock REST calls:
+    For example:
+
+```ts
+const postCall = jest.fn().mockReturnValue({ id: 3 });
+mswServer.use(rest.post("/api/contacts", mockHandler(postCall)));
+// ...
+expect(postCall).toHaveBeenCalledWith({ name: "Burt" });
+```
