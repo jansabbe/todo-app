@@ -30,10 +30,11 @@ To write our unit tests, we will be using [Jest](https://jestjs.io/). This is a 
 ![Close-up of Add Todo](docs/assets/add-todo-closeup-empty.png?raw=true)
 
 Notice how the "Add" button is disabled when the description is emtpy. It remains empty if the user enters whitespace. This logic
-is done in the `isValid` function in `src/components/add-todo/index.tsx`. 
+is done in the `isValid` function in `src/components/add-todo/index.tsx`.
 
 Create tests in `src/components/add-todo/add-todo.test.tsx`:
-> _Note:_ Tests are typically co-located with the actual implementation and end in `.test.tsx` or `.spec.tsx`. 
+
+> _Note:_ Tests are typically co-located with the actual implementation and end in `.test.tsx` or `.spec.tsx`.
 
 -   when passing an empty string, `isValid` should return false
 -   when passing a string with just whitespace, `isValid` should return false
@@ -83,7 +84,7 @@ import { faker } from "@faker-js/faker";
 const id = faker.datatype.uuid();
 ```
 
-You might also want to create a test builder to easily create todos. A pattern you can use in JavaScript/TypeScript is based on the [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) syntax. 
+You might also want to create a test builder to easily create todos. A pattern you can use in JavaScript/TypeScript is based on the [spread](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators/Spread_syntax) syntax.
 
 ```ts
 function anAddress(overrides: Partial<Address> = {}): Address {
@@ -192,9 +193,9 @@ that we cleanup after every test.
 Extra tips:
 
 -   Before rendering, call `resetTodos` to start the test with a specific todo item. This way you don't have to add it through the UI in every test.
--   We are missing a call for removing todo items. Make sure the test-server also implements `DELETE /api/todos/:todoId`
+-   We are missing a call for removing todo items. Make sure the test-server also implements `DELETE /api/todos/:todoId`. Currently our web-app always requires a JSON response. HTTP reponses without a body are not supported.
 -   Even if the server is fake, the results won't be "instant". The `await screen.findBy`-queries will come in handy. [docs](https://testing-library.com/docs/dom-testing-library/api-async/)
--   You can scope testing-library queries using `within`. (eg, `within(screen.getByRole('list')).getBy...`)
+-   You can scope testing-library queries using `within`. (eg, `within(list).getBy...`)
 -   The todo items have a trash icon, but it does have accessible text so it is still easy to find. A UI that is not accessible, will be hard to test.
 
 ### 6. Stubbing the backend

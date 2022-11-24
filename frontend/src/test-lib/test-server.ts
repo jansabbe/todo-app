@@ -23,7 +23,7 @@ export const mswServer = setupServer(
             }
             return todo;
         });
-        return response(context.status(200));
+        return response(context.status(200), context.json({}));
     }),
 
     rest.post("/api/todos", async (request, response, context) => {
