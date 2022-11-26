@@ -6,7 +6,7 @@ A code kata on testing webapps
 
 -   [![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://github.com/codespaces/new?hide_repo_select=true&ref=main&repo=569916645&machine=premiumLinux&devcontainer_path=.devcontainer%2Fdevcontainer.json&location=WestEurope)
 -   You will need to wait a bit until `npm install` finishes
--   Run `npm start` in the integrated terminal. This start both the 'backend' server (port 8001) and the frontend (port 3000).
+-   Run `npm start` in the integrated terminal. This starts both the 'backend' server (port 8001) and the frontend (port 3000).
     In the ports tab you can open the app in the browser. ![Ports tab in VSCode](docs/assets/ports.png?raw=true)
 
 Alternatively you can also set up the project locally:
@@ -58,7 +58,7 @@ launch configuration. Adding `console.log` statements is also a great debugging 
 ![Close-up of number of todos left](docs/assets/footer-closeup-items.png?raw=true)
 
 At the bottom of the todo app you will see the number of todos that are left. As you toggle todos, this number will change. The number is calculated in
-in the `countTodosLeft` function (in `src/components/footer/index.tsx`). It takes an array of todos and returns how many todos are still left to do.
+the `countTodosLeft` function (in `src/components/footer/index.tsx`). It takes an array of todos and returns how many todos are still left.
 
 Create tests in `footer.test.tsx`:
 
@@ -100,7 +100,7 @@ const randomAddress = anAddress();
 const addressInTheCity = anAddress({ zipCode: "2000" });
 ```
 
-> _Note:_ You can the test-builder in the test file, or put it in a separate test-builders file in `src/test-lib`.
+> _Note:_ You can keep the test-builder in the test file, or put it in a separate test-builders file in `src/test-lib`.
 
 ### 3. Testing Library
 
@@ -132,7 +132,7 @@ test("show todos", () => {
 > boilerplate code.
 
 Use the [testing-library queries](https://testing-library.com/docs/queries/about) to find the DOM element. Unsure which
-query would work best? Try putting `screen.logTestingPlaygroundURL()` after the `render` method and go the url.
+query would work best? Try putting `screen.logTestingPlaygroundURL()` after the `render` method and go to the url.
 
 -   Make sure you understand the difference between `getBy..`, `queryBy..` and `findBy..`.
 
@@ -177,14 +177,14 @@ You might notice that the "Description" field is only cleared _after_ submitting
 
 https://user-images.githubusercontent.com/648689/203825624-793471e2-896a-4095-b0f5-ce1271b849b9.mov
 
-When the user adds a todo in the <AddTodoForm> component (doing a `POST` to `/api/todos`), the <TodoList> will show this new todo.
+When the user adds a todo in the `<AddTodoForm>` component (doing a `POST` to `/api/todos`), the `<TodoList>` will show this new todo.
 A user can then mark the todo as done or delete it. We would like to test if this actually happens:
 
 Create tests in `src/app.test.tsx`:
 
 -   user types something in the description and clicks add. The todo shows up in the list.
--   start of with a single todo item in the list. When the user marks it as done, the footer should show 'All done!'
--   start of with a single todo item in the list. When the user deletes it, the text 'Add some todos' should show up
+-   start off with a single todo item in the list. When the user marks it as done, the footer should show 'All done!'
+-   start off with a single todo item in the list. When the user deletes it, the text 'Add some todos' should show up
 
 The components we are testing are executing REST calls. Luckily we are not testing against the real backend. In `src/test-lib/test-server.ts`
 [msw](https://mswjs.io/) is being used to [fake](https://martinfowler.com/bliki/TestDouble.html) our backend. In `src/setupTests.ts` we make sure
