@@ -1,5 +1,5 @@
 import { setupServer } from "msw/node";
-import { rest } from "msw";
+import { http, HttpResponse } from "msw";
 import { faker } from "@faker-js/faker";
 import { TodoTO } from "../lib/api";
 
@@ -10,12 +10,12 @@ export function resetTodos(initialTodos: Array<TodoTO> = []) {
 }
 
 export const mswServer = setupServer(
-    rest.get("/api/todos", (request, response, context) => {
-        return response(context.json(todos));
+    http.get("/api/todos", () => {
+        return HttpResponse.json(todos);
     }),
 
-    rest.put("/api/todos/:todoId/status", async (request, response, context) => {
-        const { todoId } = request.params;
+    http.put("/api/todos/:todoId/status", async ({ request, params }) => {
+        const { todoId } = params;
         const { done } = await request.json();
         todos = todos.map((todo) => {
             if (todo.id === todoId) {
@@ -23,13 +23,13 @@ export const mswServer = setupServer(
             }
             return todo;
         });
-        return response(context.status(200), context.json({}));
+        return HttpResponse.json({});
     }),
 
-    rest.post("/api/todos", async (request, response, context) => {
+    http.post("/api/todos", async ({ request }) => {
         const { description } = await request.json();
-        const newTodo = { id: faker.datatype.uuid(), description, done: false };
+        const newTodo = { id: faker.string.uuid(), description, done: false };
         todos.push(newTodo);
-        return response(context.json(newTodo));
-    })
+        return HttpResponse.json(newTodo);
+    }),
 );

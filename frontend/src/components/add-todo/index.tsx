@@ -9,7 +9,7 @@ export function isValid(description: string): boolean {
 export function AddTodoForm() {
     const id = useId();
     const [description, setDescription] = useState("");
-    const { mutate, error, isLoading } = useAddTodo();
+    const { mutate, error, isPending } = useAddTodo();
 
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
@@ -43,9 +43,9 @@ export function AddTodoForm() {
             <button
                 type="submit"
                 className={styles.submitButton}
-                disabled={isLoading || !isValid(description)}
+                disabled={isPending || !isValid(description)}
             >
-                {!isLoading ? "Add" : "Adding..."}
+                {!isPending ? "Add" : "Adding..."}
             </button>
         </form>
     );

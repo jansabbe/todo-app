@@ -15,7 +15,7 @@ export function TodoList() {
             </div>
         );
     }
-    if (status === "loading") {
+    if (status === "pending") {
         return (
             <div className={styles.wrapper}>
                 <LoadingPlaceholder />

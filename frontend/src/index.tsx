@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
 import App from "./app";
@@ -13,5 +12,5 @@ const queryClient = new QueryClient({
 root.render(
     <AppProviders queryClient={queryClient}>
         <App />
-    </AppProviders>
+    </AppProviders>,
 );

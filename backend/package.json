@@ -5,7 +5,7 @@
     "main": "main/main.ts",
     "type": "module",
     "scripts": {
-        "start": "nodemon main/main.ts",
+        "start": "tsx watch main/main.ts",
         "test": "vitest",
         "check": "tsc",
         "reformat": "prettier -w ."
@@ -13,17 +13,16 @@
     "author": "",
     "license": "ISC",
     "dependencies": {
-        "fastify": "4.24.3",
-        "@fastify/type-provider-json-schema-to-ts": "2.2.2"
+        "@fastify/type-provider-json-schema-to-ts": "2.2.2",
+        "fastify": "4.24.3"
     },
     "devDependencies": {
         "@tsconfig/node20": "20.1.2",
         "@types/node": "20.8.10",
         "@vitest/ui": "0.34.6",
         "axios": "1.6.0",
-        "nodemon": "3.0.1",
         "prettier": "3.0.3",
-        "ts-node": "10.9.1",
+        "tsx": "3.14.0",
         "typescript": "5.2.2",
         "vitest": "0.34.6"
     }

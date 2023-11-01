@@ -8,8 +8,7 @@
         "start:frontend": "npm run start -w frontend",
         "start:backend": "npm run start -w backend",
         "start": "conc \"npm:start:*\"",
-        "test:once": "npm run test -w frontend -- --watchAll=false",
-        "test": "npm run test -w frontend -- --watchAll",
+        "test": "npm run test -w frontend",
         "test:ci": "CI=true npm run test --workspaces",
         "check": "npm run check --workspaces"
     },
