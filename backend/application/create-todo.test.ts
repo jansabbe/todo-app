@@ -1,7 +1,7 @@
-import { TodoRepository } from "../domain/todo";
-import { InMemoryTodoRepository } from "../infrastructure/outgoing";
-import { CreateTodo, initCreateTodo } from "./create-todo";
-import { ErrorCode } from "./types";
+import { TodoRepository } from "../domain/todo.js";
+import { InMemoryTodoRepository } from "../infrastructure/outgoing.js";
+import { CreateTodo, initCreateTodo } from "./create-todo.js";
+import { ErrorCode } from "./types.js";
 
 describe("Create Todo", () => {
     let createTodo: CreateTodo;
@@ -37,7 +37,7 @@ describe("Create Todo", () => {
             });
 
             expect(todoRepository.getAll()).toEqual([]);
-        }
+        },
     );
 
     test("can create a todo with a description with 100 characters", () => {

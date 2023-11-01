@@ -1,5 +1,5 @@
-import { TodoRepository } from "../domain/todo";
-import { UseCase } from "./types";
+import { TodoRepository } from "../domain/todo.js";
+import { UseCase } from "./types.js";
 
 export type RemoveTodo = UseCase<{ id: string }, void>;
 export function initRemoveTodo(todoRepository: TodoRepository): RemoveTodo {

@@ -1,21 +1,19 @@
-import { NextFunction, Request, Response } from "express";
-import { initUseCases, UseCases } from "../application";
-import { InMemoryTodoRepository } from "../infrastructure/outgoing";
+import { initUseCases, UseCases } from "../application/index.js";
+import { InMemoryTodoRepository } from "../infrastructure/outgoing.js";
+import { FastifyInstance, FastifyPluginAsync } from "fastify";
 
-export type Context = {
-    useCases: UseCases;
-};
-
-declare global {
-    namespace Express {
-        export interface Request {
-            context: Context;
-        }
+declare module "fastify" {
+    interface FastifyInstance {
+        useCases: UseCases;
     }
 }
 
 const todoRepository = new InMemoryTodoRepository();
-export function dependencyInjection(req: Request, res: Response, next: NextFunction) {
-    req.context = { useCases: initUseCases(todoRepository) };
-    next();
+
+export async function dependencyInjection(
+    app: FastifyInstance,
+    { routes }: { routes: FastifyPluginAsync },
+) {
+    app.decorate("useCases", initUseCases(todoRepository));
+    app.register(routes);
 }

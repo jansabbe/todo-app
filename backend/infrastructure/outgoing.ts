@@ -1,4 +1,4 @@
-import { Todo, TodoRepository } from "../domain/todo";
+import { Todo, TodoRepository } from "../domain/todo.js";
 
 export class InMemoryTodoRepository implements TodoRepository {
     private todos: Array<Todo> = [];

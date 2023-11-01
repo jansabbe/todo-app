@@ -1,6 +1,6 @@
-import { TodoRepository } from "../domain/todo";
-import { InMemoryTodoRepository } from "../infrastructure/outgoing";
-import { RemoveTodo, initRemoveTodo } from "./remove-todo";
+import { TodoRepository } from "../domain/todo.js";
+import { InMemoryTodoRepository } from "../infrastructure/outgoing.js";
+import { RemoveTodo, initRemoveTodo } from "./remove-todo.js";
 
 describe("Remove Todo", () => {
     let removeTodo: RemoveTodo;

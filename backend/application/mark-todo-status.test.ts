@@ -1,7 +1,7 @@
-import { TodoRepository } from "../domain/todo";
-import { InMemoryTodoRepository } from "../infrastructure/outgoing";
-import { MarkTodoStatus, initMarkTodoStatus } from "./mark-todo-status";
-import { ErrorCode } from "./types";
+import { TodoRepository } from "../domain/todo.js";
+import { InMemoryTodoRepository } from "../infrastructure/outgoing.js";
+import { MarkTodoStatus, initMarkTodoStatus } from "./mark-todo-status.js";
+import { ErrorCode } from "./types.js";
 
 describe("Mark Todo Status", () => {
     let markTodoStatus: MarkTodoStatus;

@@ -1,43 +1,41 @@
-import express from "express";
-import { Server } from "http";
-import { routes } from "./incoming";
+import { routes } from "./incoming.js";
 import axios, { AxiosInstance } from "axios";
 import { randomUUID } from "crypto";
-import { UseCases } from "../application";
-import { ErrorCode } from "../application/types";
+import { UseCases } from "../application/index.js";
+import { ErrorCode } from "../application/types.js";
+import { Mock, vi } from "vitest";
+import fastify, { FastifyInstance } from "fastify";
 
 type MockedUseCases = {
-    [K in keyof UseCases]: jest.Mock<ReturnType<UseCases[K]>, Parameters<UseCases[K]>>;
+    [K in keyof UseCases]: Mock<Parameters<UseCases[K]>, ReturnType<UseCases[K]>>;
 };
 
 describe("REST api", () => {
-    let server: Server;
+    let app: FastifyInstance;
     let client: AxiosInstance;
     let useCases: MockedUseCases;
 
-    beforeEach(() => {
+    beforeEach(async () => {
         useCases = {
-            createTodo: jest.fn(),
-            getAllTodos: jest.fn(),
-            getTodo: jest.fn(),
-            markTodoStatus: jest.fn(),
-            removeTodo: jest.fn(),
+            createTodo: vi.fn(),
+            getAllTodos: vi.fn(),
+            getTodo: vi.fn(),
+            markTodoStatus: vi.fn(),
+            removeTodo: vi.fn(),
         };
 
-        server = express()
-            .use((req, res, next) => {
-                req.context = { useCases };
-                next();
-            })
-            .use(routes)
-            .listen();
+        app = fastify();
+        app.decorate("useCases", useCases);
+        app.register(routes);
+        await app.listen();
+
         client = axios.create({
-            baseURL: `http://localhost:${(server.address() as any).port}/`,
+            baseURL: `http://localhost:${app.addresses()[0].port}/`,
         });
     });
 
-    afterEach((done) => {
-        server.close(done);
+    afterEach(async () => {
+        await app.close();
     });
 
     test("GET /api/todos calls getAllTodos", async () => {
@@ -157,6 +155,18 @@ describe("REST api", () => {
         });
     });
 
+    test("PUT /api/todos/:id/status returns 400 if body does not contain required properties", async () => {
+        const call = client.put("/api/todos/1323/status", {}).catch((e) => e.response);
+
+        await expect(call).resolves.toMatchObject({
+            status: 400,
+            data: {
+                code: "FST_ERR_VALIDATION",
+                errorMessage: "body must have required property 'done'",
+            },
+        });
+    });
+
     test("DELETE /api/todos/:id calls removeTodo", async () => {
         const id = randomUUID();
         const call = client.delete(`/api/todos/${id}`);
@@ -164,8 +174,6 @@ describe("REST api", () => {
         await expect(call).resolves.toMatchObject({ status: 200, data: {} });
         expect(useCases.removeTodo).toHaveBeenCalledWith({ id });
     });
-
-    test.todo("only accept put/post requests that match a JSON schema");
 });
 
 function aTodo(overrides: Partial<{ id: string; description: string; done: boolean }> = {}) {
