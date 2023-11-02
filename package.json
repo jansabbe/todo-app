@@ -10,7 +10,8 @@
         "start": "conc \"npm:start:*\"",
         "test": "npm run test -w frontend",
         "test:ci": "CI=true npm run test --workspaces",
-        "check": "npm run check --workspaces"
+        "check": "npm run check --workspaces",
+        "reformat": "npm run reformat --workspaces"
     },
     "devDependencies": {
         "concurrently": "^7.6.0"

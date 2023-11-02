@@ -1,5 +1,6 @@
 .appHeader {
-    background: linear-gradient(90deg, rgba(222, 57, 234, 0.3) 2%, rgba(36, 16, 125, 0.3) 94%),
+    background:
+        linear-gradient(90deg, rgba(222, 57, 234, 0.3) 2%, rgba(36, 16, 125, 0.3) 94%),
         bottom/cover url(./assets/background.jpg);
     height: 360px;
     width: 100%;
