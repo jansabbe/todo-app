@@ -16,18 +16,16 @@ export const mswServer = setupServer(
 
     http.put("/api/todos/:todoId/status", async ({ request, params }) => {
         const { todoId } = params;
-        const { done } = await request.json();
-        todos = todos.map((todo) => {
-            if (todo.id === todoId) {
-                return { ...todo, done };
-            }
-            return todo;
-        });
+        const { done } = (await request.json()) as { done: boolean };
+        const foundTodo = todos.find((t) => t.id === todoId);
+        if (foundTodo) {
+            foundTodo.done = done;
+        }
         return HttpResponse.json({});
     }),
 
     http.post("/api/todos", async ({ request }) => {
-        const { description } = await request.json();
+        const { description } = (await request.json()) as { description: string };
         const newTodo = { id: faker.string.uuid(), description, done: false };
         todos.push(newTodo);
         return HttpResponse.json(newTodo);

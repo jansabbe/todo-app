@@ -11,12 +11,6 @@ function customRender(element: ReactElement, options?: RenderOptions): CustomRen
         defaultOptions: {
             queries: { refetchOnWindowFocus: false, retry: false },
         },
-        logger: {
-            log: console.log,
-            warn: console.warn,
-            // Do not log errors that we are stubbing as errors
-            error: () => {},
-        },
     });
 
     const user = userEvent.setup();
