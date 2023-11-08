@@ -1,3 +1,6 @@
+import { render, screen } from "../../test-lib/test-utils";
+
 test("dummy test", () => {
-    expect(1 + 1).toEqual(2);
+    render(<div>hello world</div>);
+    expect(screen.getByText("hello world")).toBeInTheDocument();
 });
