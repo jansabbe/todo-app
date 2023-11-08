@@ -1,10 +1,7 @@
 import { FormEvent, useId, useState } from "react";
 import styles from "./add-todo.module.css";
 import { useAddTodo } from "./use-add-todo";
-
-export function isValid(description: string): boolean {
-    return description.trim().length > 0;
-}
+import { isValid } from "./validate.ts";
 
 export function AddTodoForm() {
     const id = useId();

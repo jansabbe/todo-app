@@ -32,29 +32,29 @@ JavaScript/TypeScript.
 
 ![Close-up of Add Todo](docs/assets/add-todo-closeup-empty.png?raw=true)
 
-Notice how the "Add" button is disabled when the description is empty. It remains empty if the user enters whitespace.
-This logic
-is done in the `isValid` function in `src/components/add-todo/index.tsx`.
+Notice how the "Add" button is disabled when the description is empty. It remains empty if the user enters whitespace. It also
+gets disabled when the user enters more than 100 characters in the description.
 
-Create tests in `src/components/add-todo/add-todo.test.tsx`:
+This logic is done in the `isValid` function in `src/components/add-todo/validate.ts`.
 
-> _Note:_ Tests are typically co-located with the actual implementation and end in `.test.tsx` or `.spec.tsx`.
+Create tests in `src/components/add-todo/validate.test.ts`:
+
+> _Note:_ Tests are typically co-located with the actual implementation and end in `.test.ts(x)` or `.spec.ts(x)`.
 
 - when passing an empty string, `isValid` should return false
 - when passing a string with just whitespace, `isValid` should return false
 - when passing a string with text, `isValid` should return true
+- when passing a string with 100 characters, `isValid` should return false. (Tip, in JavaScript you can create such a string using `Array(100).fill('a').join('')`)
+- when passing a string with more than 100 characters `isValid` should return false
 
-Keep the [expect documentation](https://vitest.dev/api/expect.html) and [api documentation](https://vitest.dev/api/)
-handy.
+Keep the [expect documentation](https://vitest.dev/api/expect.html) and [vitest api documentation](https://vitest.dev/api/) handy.
 
 To execute the tests run `npm test`. This will start Vitest in "watch" mode. Whenever you save a file, the tests will
-run. Press `h` to explore
-the watch mode
+run. Press `h` to explore the watch mode
 
 - try only watching the `add-todo.test.tsx` file
 - try focusing on a single test
 - switch back to running all tests
-- run only the tests related to files changed since last commit
 - read the docs on [debugging](https://vitest.dev/guide/debugging.html) and step through the test in your favorite IDE
 - try using [test.each](https://vitest.dev/api/#test-each) to simplify your tests
 
