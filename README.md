@@ -63,10 +63,10 @@ run. Press `h` to explore the watch mode
 ![Close-up of number of todos left](docs/assets/footer-closeup-items.png?raw=true)
 
 At the bottom of the todo app you will see the number of todos that are left. As you toggle todos, this number will
-change. The number is calculated in the `countTodosLeft` function (in `src/components/footer/index.tsx`). It takes 
+change. The number is calculated in the `countTodosLeft` function (in `src/components/footer/count.ts`). It takes 
 an array of todos and returns how many todos are still left.
 
-Create tests in `footer.test.tsx`:
+Create tests in `count.test.ts`:
 
 - when passing an empty array, `countTodosLeft` should return 0
 - when passing an array where all todos are done, `countTodosLeft` should return 0
