@@ -30,4 +30,10 @@ export const mswServer = setupServer(
         todos.push(newTodo);
         return HttpResponse.json(newTodo);
     }),
+
+    http.delete("/api/todos/:todoId", async ({ params }) => {
+        const { todoId } = params;
+        todos = todos.filter((t) => t.id !== todoId);
+        return HttpResponse.json({});
+    }),
 );
