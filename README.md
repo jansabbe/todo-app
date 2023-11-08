@@ -217,8 +217,13 @@ Extra tips:
 
 ![Close-up of Add todo form with error message](docs/assets/add-todo-closeup-error.png?raw=true)
 
-We would like to test situations where the server returns an error. We could expand the fake test-server implementation,
-but that could lead to an overly complex fake implementation. Instead we will temporarily replace an endpoint with a
+Disabling the 'Add' button when the user types more than 100 characters isn't great UX. Instead we will
+show an explicit error message, coming from the backend. 
+
+- Remove the "less than 100 characters"-check from `components/add-todo/validate.ts`. Update/remove any relevant failing tests 
+
+We could expand the fake test-server implementation to return an error. However that can lead to an overly
+complex fake implementation. Instead we will temporarily replace an endpoint with a
 stub in our tests. The `POST /api/todos` should return a `400` status code and a json response
 that looks like this `{"code":"description_too_long","errorMessage":"Description may not be more than 100 characters"}`
 
