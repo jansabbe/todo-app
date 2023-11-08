@@ -1,5 +1,5 @@
-import { TodoRepository } from "../domain/todo";
-import { UseCase, TodoTO, Maybe, ErrorCode } from "./types";
+import { TodoRepository } from "../domain/todo.js";
+import { UseCase, TodoTO, Maybe, ErrorCode } from "./types.js";
 
 export type GetTodo = UseCase<{ id: string }, Maybe<TodoTO>>;
 export function initGetTodo(todoRepository: TodoRepository): GetTodo {

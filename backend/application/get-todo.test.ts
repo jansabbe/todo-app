@@ -1,8 +1,8 @@
 import { randomUUID } from "crypto";
-import { TodoRepository } from "../domain/todo";
-import { InMemoryTodoRepository } from "../infrastructure/outgoing";
-import { GetTodo, initGetTodo } from "./get-todo";
-import { ErrorCode } from "./types";
+import { TodoRepository } from "../domain/todo.js";
+import { InMemoryTodoRepository } from "../infrastructure/outgoing.js";
+import { GetTodo, initGetTodo } from "./get-todo.js";
+import { ErrorCode } from "./types.js";
 
 describe("Get Todo", () => {
     let getTodo: GetTodo;

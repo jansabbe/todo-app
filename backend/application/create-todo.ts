@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
-import { TodoRepository } from "../domain/todo";
-import { UseCase, TodoTO, Maybe, ErrorCode, ok, error } from "./types";
+import { TodoRepository } from "../domain/todo.js";
+import { UseCase, TodoTO, Maybe, ErrorCode, ok, error } from "./types.js";
 
 export type CreateTodo = UseCase<{ description: string }, Maybe<TodoTO>>;
 
@@ -13,7 +13,7 @@ export function initCreateTodo(todoRepository: TodoRepository): CreateTodo {
         if (description.length > 100) {
             return error(
                 ErrorCode.DescriptionTooLong,
-                "Description may not be more than 100 characters"
+                "Description may not be more than 100 characters",
             );
         }
 

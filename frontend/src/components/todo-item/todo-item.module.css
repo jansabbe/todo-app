@@ -9,6 +9,7 @@
     flex: 1;
     font-weight: 225;
     cursor: pointer;
+    overflow-wrap: anywhere;
 }
 
 .checked {
@@ -24,10 +25,10 @@
 }
 
 .deleteButton {
-    display: none;
+    visibility: hidden;
 }
 
 .wrapper:hover .deleteButton,
 .wrapper:focus-within .deleteButton {
-    display: initial;
+    visibility: revert;
 }

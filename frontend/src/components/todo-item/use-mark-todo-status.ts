@@ -17,7 +17,7 @@ export function useMarkTodoStatus({ id }: Args): Result {
             const original: Array<TodoTO> | undefined = queryClient.getQueryData(["todos"]);
             queryClient.setQueryData(
                 ["todos"],
-                original?.map((todo) => (todo.id === id ? { ...todo, done } : todo))
+                original?.map((todo) => (todo.id === id ? { ...todo, done } : todo)),
             );
             return original;
         },

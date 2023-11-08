@@ -1,6 +1,6 @@
 import { randomUUID } from "crypto";
-import { Todo, TodoRepository } from "../domain/todo";
-import { InMemoryTodoRepository } from "./outgoing";
+import { Todo, TodoRepository } from "../domain/todo.js";
+import { InMemoryTodoRepository } from "./outgoing.js";
 
 function aTodo(overrides: Partial<Todo> = {}): Todo {
     return {

@@ -1,6 +1,8 @@
-import { isValid } from "./index";
-import { screen, render, waitFor } from "../../test-lib/test-utils";
+import { render, screen } from "../../test-lib/test-utils";
+import { AddTodoForm } from "./index.tsx";
 
 test("dummy test", () => {
-    expect(1 + 2).toEqual(3);
+    render(<AddTodoForm />);
+    const addButton = screen.getByRole("button", { name: /add/i });
+    expect(addButton).toBeDisabled();
 });

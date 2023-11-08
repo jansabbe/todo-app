@@ -1,49 +1,172 @@
-import bodyParser from "body-parser";
-import { Response, Router } from "express";
-import { ErrorCode, Maybe } from "../application/types";
+import Fastify, {
+    FastifyBaseLogger,
+    FastifyInstance,
+    RawReplyDefaultExpression,
+    RawRequestDefaultExpression,
+    RawServerDefault,
+} from "fastify";
+import { JsonSchemaToTsProvider } from "@fastify/type-provider-json-schema-to-ts";
+import { ErrorCode } from "../application/types.js";
 
-const routes = Router();
-routes.use(bodyParser.json());
+type FastifyJsonSchema = FastifyInstance<
+    RawServerDefault,
+    RawRequestDefaultExpression<RawServerDefault>,
+    RawReplyDefaultExpression<RawServerDefault>,
+    FastifyBaseLogger,
+    JsonSchemaToTsProvider
+>;
 
-routes.get("/api/todos", ({ context }, res) => {
-    const { getAllTodos } = context.useCases;
-    return res.json(getAllTodos());
-});
+const todoTOType = {
+    type: "object",
+    required: ["id", "description", "done"],
+    properties: {
+        id: { type: "string" },
+        description: { type: "string" },
+        done: { type: "boolean" },
+    },
+} as const;
+const errorType = {
+    type: "object",
+    required: ["code", "errorMessage"],
+    properties: {
+        code: { type: "string" },
+        errorMessage: { type: "string" },
+    },
+} as const;
 
-routes.get("/api/todos/:id", ({ params, context }, res) => {
-    const { getTodo } = context.useCases;
-    const result = getTodo({ id: params.id });
-    return mapMaybe(res, result);
-});
+export async function routes(app: FastifyJsonSchema) {
+    app.route({
+        method: "GET",
+        url: "/api/todos",
+        schema: {
+            response: { 200: { type: "array", items: todoTOType } },
+        },
+        handler(request, reply) {
+            reply.send(app.useCases.getAllTodos());
+        },
+    });
 
-routes.post("/api/todos", ({ body, context }, res) => {
-    const { description } = body;
-    const { createTodo } = context.useCases;
-    const result = createTodo({ description });
-    return mapMaybe(res, result);
-});
+    app.route({
+        method: "GET",
+        url: "/api/todos/:id",
+        schema: {
+            params: {
+                type: "object",
+                required: ["id"],
+                properties: { id: { type: "string" } },
+            },
+            response: {
+                200: todoTOType,
+                404: errorType,
+            },
+        },
+        handler(request, reply) {
+            const result = app.useCases.getTodo({ id: request.params.id });
 
-routes.put("/api/todos/:id/status", ({ params, body, context }, res) => {
-    const { done } = body;
-    const { markTodoStatus } = context.useCases;
-    const result = markTodoStatus({ id: params.id, done });
-    return mapMaybe(res, result);
-});
+            if (result.status === "OK") {
+                reply.send(result.result);
+            } else {
+                reply.status(404).send({
+                    code: result.code,
+                    errorMessage: result.errorMessage,
+                });
+            }
+        },
+    });
 
-routes.delete("/api/todos/:id", ({ params, context }, res) => {
-    const { removeTodo } = context.useCases;
-    removeTodo({ id: params.id });
-    return res.json({});
-});
+    app.route({
+        method: "POST",
+        url: "/api/todos",
+        schema: {
+            body: {
+                type: "object",
+                required: ["description"],
+                properties: {
+                    description: { type: "string" },
+                },
+            },
+            response: {
+                200: todoTOType,
+                400: errorType,
+            },
+        },
+        handler(request, reply) {
+            const { description } = request.body;
+            const result = app.useCases.createTodo({ description });
 
-function mapMaybe(res: Response, result: Maybe<any>): Response {
-    if (result.status === "OK") {
-        return res.json(result.result);
-    } else {
-        return res
-            .status(result.code === ErrorCode.TodoNotFound ? 404 : 400)
-            .json({ code: result.code, errorMessage: result.errorMessage });
-    }
+            if (result.status === "OK") {
+                reply.send(result.result);
+            } else {
+                reply.status(400).send({
+                    code: result.code,
+                    errorMessage: result.errorMessage,
+                });
+            }
+        },
+    });
+
+    app.route({
+        method: "PUT",
+        url: "/api/todos/:id/status",
+        schema: {
+            params: {
+                type: "object",
+                required: ["id"],
+                properties: { id: { type: "string" } },
+            },
+            body: {
+                type: "object",
+                required: ["done"],
+                properties: { done: { type: "boolean" } },
+            },
+            response: {
+                200: { type: "object", properties: {} },
+                400: errorType,
+            },
+        },
+        handler(request, reply) {
+            const result = app.useCases.markTodoStatus({
+                id: request.params.id,
+                done: request.body.done,
+            });
+            if (result.status === "OK") {
+                reply.send(result.result);
+            } else {
+                reply.status(result.code === ErrorCode.TodoNotFound ? 404 : 400).send({
+                    code: result.code,
+                    errorMessage: result.errorMessage,
+                });
+            }
+        },
+    });
+
+    app.route({
+        method: "DELETE",
+        url: "/api/todos/:id",
+        schema: {
+            params: {
+                type: "object",
+                required: ["id"],
+                properties: { id: { type: "string" } },
+            },
+            response: {
+                200: { type: "object", properties: {} },
+            },
+        },
+        handler(request, reply) {
+            app.useCases.removeTodo({ id: request.params.id });
+            return {};
+        },
+    });
+
+    app.setErrorHandler((error, request, reply) => {
+        if (error.statusCode === 400) {
+            reply.status(error.statusCode).send({
+                code: error.code,
+                errorMessage: error.message,
+            });
+            return;
+        }
+        throw error;
+    });
 }
-
-export { routes };

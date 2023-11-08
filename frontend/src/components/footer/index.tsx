@@ -1,9 +1,6 @@
 import { TodoTO } from "../../lib/api";
 import styles from "./footer.module.css";
-
-export function countTodosLeft(todos: Array<TodoTO>): number {
-    return todos.filter((todo) => !todo.done).length;
-}
+import { countTodosLeft } from "./count.ts";
 
 export function Footer({ todos }: { todos: Array<TodoTO> }) {
     const todosLeft = countTodosLeft(todos);

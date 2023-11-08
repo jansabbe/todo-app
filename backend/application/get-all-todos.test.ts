@@ -1,6 +1,6 @@
-import { TodoRepository } from "../domain/todo";
-import { InMemoryTodoRepository } from "../infrastructure/outgoing";
-import { GetAllTodos, initGetAllTodos } from "./get-all-todos";
+import { TodoRepository } from "../domain/todo.js";
+import { InMemoryTodoRepository } from "../infrastructure/outgoing.js";
+import { GetAllTodos, initGetAllTodos } from "./get-all-todos.js";
 
 describe("Get all todos", () => {
     let getAllTodos: GetAllTodos;

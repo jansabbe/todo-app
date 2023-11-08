@@ -1,5 +1,5 @@
-import { TodoRepository } from "../domain/todo";
-import { UseCase, Maybe, ErrorCode } from "./types";
+import { TodoRepository } from "../domain/todo.js";
+import { UseCase, Maybe, ErrorCode } from "./types.js";
 
 export type MarkTodoStatus = UseCase<{ id: string; done: boolean }, Maybe<{}>>;
 export function initMarkTodoStatus(todoRepository: TodoRepository): MarkTodoStatus {

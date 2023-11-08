@@ -1,15 +1,12 @@
 import { FormEvent, useId, useState } from "react";
 import styles from "./add-todo.module.css";
 import { useAddTodo } from "./use-add-todo";
-
-export function isValid(description: string): boolean {
-    return description.trim().length > 0;
-}
+import { isValid } from "./validate.ts";
 
 export function AddTodoForm() {
     const id = useId();
     const [description, setDescription] = useState("");
-    const { mutate, error, isLoading } = useAddTodo();
+    const { mutate, error, isPending } = useAddTodo();
 
     const onSubmit = (event: FormEvent) => {
         event.preventDefault();
@@ -34,18 +31,20 @@ export function AddTodoForm() {
                     onChange={(v) => setDescription(v.target.value)}
                     {...(error ? { "aria-describedby": `error-${id}` } : {})}
                 />
-                {error && (
-                    <p id={`error-${id}`} className={styles.errorMessage}>
-                        {error.response.errorMessage}
-                    </p>
-                )}
+                <div role="alert">
+                    {error && (
+                        <p id={`error-${id}`} className={styles.errorMessage}>
+                            {error.response.errorMessage}
+                        </p>
+                    )}
+                </div>
             </div>
             <button
                 type="submit"
                 className={styles.submitButton}
-                disabled={isLoading || !isValid(description)}
+                disabled={isPending || !isValid(description)}
             >
-                {!isLoading ? "Add" : "Adding..."}
+                {!isPending ? "Add" : "Adding..."}
             </button>
         </form>
     );

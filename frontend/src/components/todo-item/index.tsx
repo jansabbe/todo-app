@@ -7,7 +7,7 @@ import { useMarkTodoStatus } from "./use-mark-todo-status";
 
 export function TodoItem({ todo }: { todo: TodoTO }) {
     const id = useId();
-    const { mutate, isLoading } = useMarkTodoStatus({ id: todo.id });
+    const { mutate, isPending } = useMarkTodoStatus({ id: todo.id });
     return (
         <div className={styles.wrapper}>
             <input
@@ -15,7 +15,7 @@ export function TodoItem({ todo }: { todo: TodoTO }) {
                 type="checkbox"
                 className={styles.inputCheckbox}
                 checked={todo.done}
-                disabled={isLoading}
+                disabled={isPending}
                 onChange={(e) => mutate({ done: e.target.checked })}
             />
             <label

@@ -2,15 +2,16 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Debug Test",
             "type": "node",
             "request": "launch",
-            "runtimeExecutable": "${workspaceFolder}/node_modules/.bin/react-scripts",
-            "args": ["test", "--runInBand", "--no-cache", "--watchAll=false", "${relativeFile}"],
-            "cwd": "${workspaceFolder}/frontend",
+            "name": "Debug Current Test File",
+            "autoAttachChildProcesses": true,
+            "skipFiles": ["<node_internals>/**", "**/node_modules/**"],
+            "program": "${workspaceRoot}/node_modules/vitest/vitest.mjs",
+            "args": ["run", "${fileDirnameBasename}${pathSeparator}${fileBasename}"],
+            "smartStep": true,
             "console": "integratedTerminal",
-            "internalConsoleOptions": "neverOpen",
-            "env": { "CI": "true" }
+            "cwd": "${workspaceFolder}/frontend"
         }
     ]
 }

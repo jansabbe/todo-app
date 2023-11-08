@@ -1,23 +1,24 @@
 import axios, { AxiosInstance } from "axios";
-import express from "express";
-import { Server } from "http";
-import { dependencyInjection } from "./dependency-injection";
-import { routes } from "../infrastructure/incoming";
+import { dependencyInjection } from "./dependency-injection.js";
+import { routes } from "../infrastructure/incoming.js";
+import fastify, { FastifyInstance } from "fastify";
 
 describe("E2E happy flow", () => {
     const todoDescription = "Get some groceries";
-    let server: Server;
+    let app: FastifyInstance;
     let client: AxiosInstance;
 
-    beforeAll(() => {
-        server = express().use(dependencyInjection).use(routes).listen();
+    beforeAll(async () => {
+        app = fastify();
+        await app.register(dependencyInjection, { routes }).listen();
+
         client = axios.create({
-            baseURL: `http://localhost:${(server.address() as any).port}/`,
+            baseURL: `http://localhost:${app.addresses()[0].port}/`,
         });
     });
 
-    afterAll((done) => {
-        server.close(done);
+    afterAll(async () => {
+        await app.close();
     });
 
     it("1 - start with no todos", async () => {
