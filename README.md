@@ -52,7 +52,7 @@ Keep the [expect documentation](https://vitest.dev/api/expect.html) and [vitest 
 To execute the tests run `npm test`. This will start Vitest in "watch" mode. Whenever you save a file, the tests will
 run. Press `h` to explore the watch mode
 
-- try only watching the `add-todo.test.tsx` file
+- try only watching the `validate.test.ts` file
 - try focusing on a single test
 - switch back to running all tests
 - read the docs on [debugging](https://vitest.dev/guide/debugging.html) and step through the test in your favorite IDE
