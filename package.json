@@ -9,6 +9,7 @@
         "start:backend": "npm run start -w backend",
         "start": "conc \"npm:start:*\"",
         "test": "npm run test -w frontend",
+        "test:run": "npm run test -w frontend -- run",
         "test:ci": "CI=true npm run test --workspaces",
         "check": "npm run check --workspaces",
         "reformat": "npm run reformat --workspaces"
