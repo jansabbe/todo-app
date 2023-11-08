@@ -31,11 +31,13 @@ export function AddTodoForm() {
                     onChange={(v) => setDescription(v.target.value)}
                     {...(error ? { "aria-describedby": `error-${id}` } : {})}
                 />
-                {error && (
-                    <p id={`error-${id}`} className={styles.errorMessage}>
-                        {error.response.errorMessage}
-                    </p>
-                )}
+                <div role="alert">
+                    {error && (
+                        <p id={`error-${id}`} className={styles.errorMessage}>
+                            {error.response.errorMessage}
+                        </p>
+                    )}
+                </div>
             </div>
             <button
                 type="submit"
