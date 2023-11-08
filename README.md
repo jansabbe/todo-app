@@ -183,9 +183,6 @@ test("user hovers over a button", async () => {
 
 > _Note_: the methods on `user` return promises, you will need to `await` them.
 
-You might notice that the "Description" field is only cleared _after_ submitting to the server. You can
-use [waitFor](https://testing-library.com/docs/dom-testing-library/api-async/#waitfor) for this. (eg: `await waitFor(() => expect(...).toHaveValue(...))`)
-
 ### 5. Faking the backend
 
 https://user-images.githubusercontent.com/648689/203825624-793471e2-896a-4095-b0f5-ce1271b849b9.mov
